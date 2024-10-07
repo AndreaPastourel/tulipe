@@ -48,10 +48,11 @@ $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
                 echo "<td>".$res['groupe']."</td>";
                 echo "<td>".$res['login']."</td>";
                 echo "<td>".$res['email']."</td>";
-                echo "<td>".str_repeat('*', strlen($res['password']))."</td>";
+                 // Afficher toujours 8 astérisques pour la colonne mot de passe
+                 echo "<td>********</td>";
                 echo "<td>".$res['role']."</td>";
-                echo "<td> <a href=\"tulipe/crud/users/edit.php?id={$res['id']}\">Modifier</a> | 
-                          <a href=\"tulipe/crud/users/delete.php?id={$res['id']}\" onClick=\"return confirm('Etes vous sur de supprimer?')\">Supprimer</a></td>";
+                echo "<td> <a href=\"/tulipe/crud/user/edit.php?id={$res['id']}\">Modifier</a> | 
+                          <a href=\"/tulipe/crud/user/delete.php?id={$res['id']}\" onClick=\"return confirm('Etes vous sur de supprimer?')\">Supprimer</a></td>";
             echo "</tr>";
         }
         ?>

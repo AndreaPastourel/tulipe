@@ -156,7 +156,15 @@ input {
     text-align: center;
     color: #6a1b9a; /* Corresponding to a purple theme */
 }
+/* Réduire la largeur de la colonne des mots de passe */
+.crud table td.password {
+    width: 150px; /* Ajustez cette valeur à votre convenance */
+    word-break: break-all;
+}
 
+.crud table th.password {
+    width: 150px; /* Ajustez cette valeur à votre convenance */
+}
 .crud p a {
     text-decoration: none;
     background-color: #6a1b9a;
@@ -200,3 +208,4 @@ input {
 .crud td a:hover {
     text-decoration: underline;
 }
+

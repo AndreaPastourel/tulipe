@@ -36,32 +36,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute([$groupe,$login,$email, $hashed_password,$role]);
 
             // Message de succès
-            echo "<p style='color:green;'>L'utilisateur $username a été ajouté avec succès.</p>";
+            $messageValide="<p style='color:green;'>L'utilisateur $login a été ajouté avec succès.</p>";
         } catch (PDOException $e) {
-            echo "<p style='color:red;'>ERREUR: " . $e->getMessage() . "</p>";
+           $messageErreur="<p style='color:red;'>ERREUR: " . $e->getMessage() . "</p>";
         }
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/header.php'); ?>
-
-<body background="/arrasGames/img/arrasGames-bg-2.jpg">
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/nav.php'); ?>
-
-<div class="formulaire">
+<div class="crud">
 
     <!-- Formulaire pour ajouter un utilisateur (inclus via require_once) -->
-    <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/crud/users/add.php'); ?>
+    <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/crud/user/add.php'); ?>
 
 </div>
-
-<!-- footer section -->
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/footer.php'); ?>
-<!-- footer section -->
 
 </body>
 </html>
