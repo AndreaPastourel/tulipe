@@ -7,7 +7,7 @@
 	<div class="card">
 		<div class="card-image">	
 			<h2 class="card-heading">
-				Se connecter
+				Se connecter 
 				<small>Let us create your account</small>
 			</h2>
 		</div>
