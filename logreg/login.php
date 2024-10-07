@@ -7,22 +7,17 @@
 	<div class="card">
 		<div class="card-image">	
 			<h2 class="card-heading">
-				Se connecter
-				<small>Let us create your account</small>
+				Se connecter 
 			</h2>
 		</div>
 		<form class="card-form">
 			<div class="input">
 				<input type="text" class="input-field" value="Alexander Parkinson" required/>
-				<label class="input-label">Full name</label>
-			</div>
-						<div class="input">
-				<input type="text" class="input-field" value="vlockn@gmail.com" required/>
-				<label class="input-label">Email</label>
+				<label class="input-label">Login</label>
 			</div>
 						<div class="input">
 				<input type="password" class="input-field" required/>
-				<label class="input-label">Mot de passe</label>
+				<label class="input-label">Password</label>
 			</div>
 			<div class="action">
 				<button class="action-button">Se connecter</button>
