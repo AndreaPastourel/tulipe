@@ -24,7 +24,7 @@
 			</div>
 		</form>
 		<div class="card-info">
-			<p>En vous inscrivant, vous acceptez nos <a href="#">conditions générales</a></p>
+			<p>By signing up you are agreeing to our <a href="#">Terms and Conditions</a></p>
 		</div> 
 	</div>
 </div></body>
