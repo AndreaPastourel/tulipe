@@ -2,28 +2,35 @@
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php'); // Connexion à la base de données
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['login'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-  
+    // Préparer la requête pour vérifier l'utilisateur
     $stmt = $pdo->prepare("SELECT * FROM users WHERE login = ? AND email = ?");
     $stmt->execute([$login, $email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    
-    if ($user && password_verify($password, $user['password'])) {
-        
-        $_SESSION['username'] = $user['login'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['id'] = $user['id']; 
-        $_SESSION['groupe'] = $user['groupe']; 
-        header("Location: /tulipe/crud/tulipes/index.php"); 
-        exit();
+    // Vérifier si l'utilisateur existe et valider le mot de passe
+    if ($user) {
+        // Débogage : afficher les détails de l'utilisateur
+        echo "<pre>";
+        print_r($user);
+        echo "</pre>";
+
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['username'] = $user['login'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['id'] = $user['id']; 
+            $_SESSION['groupe'] = $user['groupe']; 
+            header("Location: /tulipe/crud/tulipes/index.php"); 
+            exit();
+        } else {
+            echo "<p style='color:red;'>Mot de passe incorrect.</p>"; 
+        }
     } else {
-        echo "<p style='color:red;'>Login, email ou mot de passe incorrect.</p>"; 
+        echo "<p style='color:red;'>Login ou email incorrect.</p>"; 
     }
 }
 ?>
@@ -34,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <div class="card">
         <div class="card-image">    
-            <h2 class="card-heading">
-                Se connecter 
-            </h2>
+            <h2 class="card-heading">Se connecter</h2>
         </div>
         <form class="card-form" action="login.php" method="POST">
             <div class="input">
