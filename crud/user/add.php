@@ -1,30 +1,35 @@
 <?php 
    // if (session_status() == PHP_SESSION_NONE) {
     //session_start();}
-    //if(!isset($_SESSION['username']) || $_SESSION['role']!="admin"){
-      //header("Location: ../../../unauthorized.php");
+    //if(!isset($_SESSION['username']) || $_SESSION['role']!="Professeur"){
+      //header("Location: /tulipe/unauthorized.php");
         //exit();
     //}
     ?>
 
-<!DOCTYPE html>
-<html>
-
-<?php require_once  ($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/header.php')?>
-
-<body background="/arrasGames/img/arrasGames-bg-2.jpg">
-<?php require_once ($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/nav.php')?>
-<div class="formulaire">
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
 
 
-        <h2>Ajouter des données </h2>
-        <p><a href="/arrasGames/crudUsers.php">Retour en arriere</a></p>
+<body background="/tulipe/img/wallpaper-tulipe.jpg">
 
-        <form action="action/add.php" method="post" name="add" enctype="multipart/form-data">
+    <div class="crud">
+    <h1>Ajouter des données</h1>
+
+        <p><a href="/tulipe/crud/user/crudUser.php">Retour en arriere</a></p>
+
+        <form action="/tulipe/crud/user/action/add.php" method="post" name="add" enctype="multipart/form-data">
     <table>
         <tr>
-            <td>Username</td>
-            <td><input type="text" name="username" required></td>
+            <td>Groupe</td>
+            <td><input type="text" name="groupe" required></td>
+        </tr>
+        <tr>
+            <td>Login</td>
+            <td><input type="text" name="login" required></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="email" required></td>
         </tr>
 
         <tr>
@@ -39,18 +44,12 @@
                 </tr>
 
         <tr>
-            <td>Email</td>
-            <td><input type="email" name="email" required></td>
-        </tr>
-
-        <tr>
             <td>Role</td>
             <td>
                 <select name="role" id="role" required>
-                    <option value="">--Please choose an option--</option>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                    <option value="staff">Staff</option>
+                    <option value="">--Choisir une option-</option>
+                    <option value="Professeur">Professeur</option>
+                    <option value="Eleve">Eleve</option>
                 </select>
             </td>
         </tr>
