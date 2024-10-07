@@ -3,7 +3,7 @@ $db = "tulipes";
 $dbhost = "localhost";
 $dbport = 3306;
 $dbuser = "root";
-$dbpassword = "Root123";
+$dbpassword = "1234";
 
 try {
     $pdo = new PDO('mysql:host=' . $dbhost . ';port=' . $dbport . ';dbname=' . $db, $dbuser, $dbpassword);
