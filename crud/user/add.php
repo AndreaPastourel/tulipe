@@ -12,7 +12,7 @@
 
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 
-    <div class="crud">
+    <div class="form">
     <h1>Ajouter des données</h1>
     <?php echo isset($messageValide) ? "<span style='color:green;'>$messageValide</span>" : '';?>
     <?php echo isset($messageErreur) ? "<span style='color:red;'>$messageErreur</span>" : '';?>

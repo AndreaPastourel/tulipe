@@ -209,3 +209,83 @@ input {
     text-decoration: underline;
 }
 
+.form {
+    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc avec opacité */
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre portée */
+}
+
+.form h2 {
+    text-align: center;
+    color: #6a1b9a; /* Couleur similaire à la page CRUD */
+    margin-bottom: 20px;
+}
+
+.form table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.form table td {
+    padding: 12px;
+    font-size: 16px;
+}
+
+.form input[type="text"], .form input[type="email"], .form input[type="password"], .form select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form input[type="submit"] {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #4a148c;
+}
+
+.form a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #6a1b9a;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.form a:hover {
+    background-color: #4a148c;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container input[type="password"] {
+    padding-right: 30px; /* Ajout de place pour l'icône */
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
