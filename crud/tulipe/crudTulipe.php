@@ -2,11 +2,6 @@
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php');
 
-// Vérifier que l'utilisateur est connecté
-if (!isset($_SESSION['username'])) {
-    header("Location: /tulipe/login.php");
-    exit();
-}
 
 // Requête pour récupérer les tulipes de l'équipe de l'utilisateur
 $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE groupe = ?");
