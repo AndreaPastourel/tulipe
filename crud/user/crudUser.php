@@ -13,7 +13,7 @@
 
 <?php
 //Include the database connection file
-require_once(($_SERVER['DOCUMENT_ROOT'] . '/tulipe/dbConnectphp'));
+require_once(($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php'));
 
 //Requete pour recuperer les utilisateurs 
 $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
@@ -59,9 +59,7 @@ $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
     </div>
  
 
-  <!-- footer section -->
-  <?php require_once('headFoot/footer.php'); ?>
-  <!-- footer section -->
+
 
 </body>
 
