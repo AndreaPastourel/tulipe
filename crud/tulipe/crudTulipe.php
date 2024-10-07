@@ -11,11 +11,18 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['username'])) {
 
 // Récupérer l'id de l'utilisateur
 $userId = $_SESSION['id'];
+$userRole = $_SESSION['role'];
 
 // Préparer la requête pour récupérer les tulipes de l'utilisateur
+if  ($userRole=="Professeur"){
 $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE idusers = ?");
 $stmt->execute([$userId]);
-$tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);}
+
+else if($userRole=="Eleve"){
+    $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE idusers = ?");
+    $stmt->execute([$userId]);
+    $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);}
 
 ?>
 
@@ -26,7 +33,7 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="/tulipe/css/style.css"> <!-- Lien vers votre fichier CSS -->
 </head>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
-    <div class="container">
+    <div class="crud">
         <h1>CRUD Tulipes - Utilisateur</h1>
         <h2>Ajouter des tulipes</h2>
         <table>
