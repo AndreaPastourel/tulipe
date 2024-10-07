@@ -1,8 +1,8 @@
 <?php 
     //if (session_status() == PHP_SESSION_NONE) {
    // session_start();}
-   //if(!isset($_SESSION['username']) || $_SESSION['role']!="admin"){
-    //  header("Location: /arrasGames/unauthorized.php");
+   //if(!isset($_SESSION['username']) || $_SESSION['role']!="professeur"){
+    //  header("Location: /tulipe/unauthorized.php");
     //   exit();
     //}
     ?>
@@ -27,15 +27,16 @@ $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
 
     <div class="crud">
     <h1>CRUD utilisateurs</h1>
-    <p><a href="tulipe/crud/users/add.php">Ajouter des utilisateurs</a></p>
+    <p><a href="/tulipe/crud/user/add.php">Ajouter des utilisateurs</a></p>
 
     <!-- Debut du tableau crud -->
     <table>
         <tr>
             <td>ID</td>
-            <td>Username</td>
-            <td>Password</td>
+            <td>Groupe</td>
+            <td>Login</td>
             <td>Email</td>
+            <td>Password</td>
             <td>Role</td>
             <td>Action</td>
         </tr>
@@ -44,9 +45,10 @@ $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
         while($res=$stmt->fetch(PDO::FETCH_ASSOC)){
             echo "<tr>";
                 echo "<td>".$res['id']."</td>";
-                echo "<td>".$res['username']."</td>";
-                echo "<td>".str_repeat('*', strlen($res['password']))."</td>";
+                echo "<td>".$res['groupe']."</td>";
+                echo "<td>".$res['login']."</td>";
                 echo "<td>".$res['email']."</td>";
+                echo "<td>".str_repeat('*', strlen($res['password']))."</td>";
                 echo "<td>".$res['role']."</td>";
                 echo "<td> <a href=\"tulipe/crud/users/edit.php?id={$res['id']}\">Modifier</a> | 
                           <a href=\"tulipe/crud/users/delete.php?id={$res['id']}\" onClick=\"return confirm('Etes vous sur de supprimer?')\">Supprimer</a></td>";
