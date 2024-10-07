@@ -11,8 +11,8 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Récupérer les informations de la tulipe à modifier
-    $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE id = ? AND groupe = ?");
-    $stmt->execute([$id, $_SESSION['groupe']]);
+    $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE id = ? AND idusers = ?");
+    $stmt->execute([$id, $_SESSION['id']]);
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$res) {
@@ -32,6 +32,7 @@ if (isset($_GET['id'])) {
         $stmt->execute([$quantite, $prix, $moyen_de_paiement, $est_paye, $signature, $id]);
 
         header("Location: index.php");
+        exit();
     }
 }
 ?>
@@ -42,4 +43,6 @@ if (isset($_GET['id'])) {
     <h2>Modifier la Tulipe</h2>
     <form method="post" action="edit.php?id=<?php echo $id; ?>">
         <label>Quantité:</label><br>
-        <input type="number" name="quantite" value="<?php echo $res['quant
+        <input type="number" name="quantite" value="<?php echo $res['quantite']; ?>" required><br>
+        <label>Prix:</label><br>
+        <input type="text" name="prix" value="<?php echo $
