@@ -2,11 +2,6 @@
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php');
 
-// Vérifiez que l'utilisateur est connecté
-if (!isset($_SESSION['username'])) {
-    header("Location: /tulipe/login.php");
-    exit();
-}
 
 // Vérifiez si les clés de session existent
 if (!isset($_SESSION['id']) || !isset($_SESSION['username'])) {
