@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user['role'];
         $_SESSION['id'] = $user['id']; 
         $_SESSION['groupe'] = $user['groupe']; 
-        header("Location: ../crud/tulipe/crudTulipe"); 
+        header("Location: ../crud/tulipe/crudTulipe.php"); 
         exit();
     } else {
         echo "<p style='color:red;'>Login, email ou mot de passe incorrect.</p>"; 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php')) ?>
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '../headFoot/header.php')) ?>
 
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 <div class="container">
