@@ -12,7 +12,7 @@ $stmt->execute([$_SESSION['id']]);
 <html>
 <body>
 
-    <h1>CRUD Tulipes - Utilisateur: <?php echo $_SESSION['username']; ?></h1>
+    <h1>CRUD Tulipes - Utilisateur: <?php echo $_SESSION['login']; ?></h1>
     <p><a href="add.php">Ajouter des tulipes</a></p>
 
     <table border="1">
