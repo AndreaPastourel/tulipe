@@ -26,7 +26,7 @@ $stmt = $pdo->query("SELECT * FROM tulipes ORDER BY id");
 
     <div class="crud">
         <h1>CRUD Tulipes</h1>
-        <p><a href="/tulipe/crud/tulipes/add.php">Ajouter des tulipes</a></p>
+        <p><a href="add.php">Ajouter des tulipes</a></p>
 
         <!-- Start of CRUD table -->
         <table>
@@ -51,8 +51,8 @@ $stmt = $pdo->query("SELECT * FROM tulipes ORDER BY id");
                     echo "<td>".($res['est_paye'] ? 'Oui' : 'Non')."</td>";
                     echo "<td>".$res['idusers']."</td>";
                     echo "<td>".($res['signature'] !== NULL ? $res['signature'] : 'NULL')."</td>";
-                    echo "<td> <a href=\"/tulipe/crud/tulipes/edit.php?id={$res['id']}\">Modifier</a> | 
-                              <a href=\"/tulipe/crud/tulipes/delete.php?id={$res['id']}\" onClick=\"return confirm('Etes-vous sûr de vouloir supprimer?')\">Supprimer</a></td>";
+                    echo "<td> <a href=\"edit.php?id={$res['id']}\">Modifier</a> | 
+                              <a href=\"delete.php?id={$res['id']}\" onClick=\"return confirm('Etes-vous sûr de vouloir supprimer?')\">Supprimer</a></td>";
                 echo "</tr>";
             }
             ?>
