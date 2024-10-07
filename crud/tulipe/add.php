@@ -15,13 +15,13 @@ if (isset($_POST['submit'])) {
     $est_paye = isset($_POST['est_paye']) ? 1 : 0;
     $idusers = $_SESSION['id']; // ID de l'utilisateur courant
     $signature = $_POST['signature'];
-    $groupe = $_SESSION['groupe']; // L'équipe de l'utilisateur
 
     // Insertion dans la base de données
-    $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, prix, moyen_de_paiement, est_paye, idusers, signature, groupe) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$quantite, $prix, $moyen_de_paiement, $est_paye, $idusers, $signature, $groupe]);
+    $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, prix, moyen_de_paiement, est_paye, idusers, signature) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$quantite, $prix, $moyen_de_paiement, $est_paye, $idusers, $signature]);
 
     header("Location: index.php");
+    exit();
 }
 ?>
 
