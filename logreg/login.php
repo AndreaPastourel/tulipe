@@ -25,6 +25,6 @@
 		</form>
 		<div class="card-info">
 			<p>By signing up you are agreeing to our <a href="#">Terms and Conditions</a></p>
-		</div> 
+		</div>  
 	</div>
 </div></body>
