@@ -1,42 +1,41 @@
-
 <?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
 
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 <div class="container">
-	<!-- code here -->
 	<div class="card">
 		<div class="card-image">	
 			<h2 class="card-heading">
 				Se connecter 
 			</h2>
 		</div>
-		<form class="card-form">
+		<form class="card-form" action="login.php" method="POST">
 			<div class="input">
-				<input type="text" class="input-field" required/>
-				<label class="input-label" name ="login" id="login">Login</label>
+				<input type="text" class="input-field" name="login" id="login" required/>
+				<label class="input-label" for="login">Login</label>
 			</div>
 
 			<div class="input">
-				<input type="text" class="input-field" required/>
-				<label class="input-label" name ="email" id="login">Email</label>
+				<input type="email" class="input-field" name="email" id="email" required/>
+				<label class="input-label" for="email">Email</label>
 			</div>
 
-						<div class="input">
-				<input type="password" class="input-field" required/>
-				<label class="input-label" name="password" id="password">Mot de passe</label>
+			<div class="input">
+				<input type="password" class="input-field" name="password" id="password" required/>
+				<label class="input-label" for="password">Mot de passe</label>
 			</div>
+
 			<div class="action">
-				<button class="action-button">Se connecter</button>
+				<button class="action-button" type="submit">Se connecter</button>
 			</div>
 		</form>
 		<div class="card-info">
 			<p>En vous inscrivant, vous acceptez nos <a href="#">conditions générales</a></p>
 		</div> 
 	</div>
-</div></body> 
+</div>
+</body>
 
 <?php
-
 session_start();
 include "../conn/dbConnect.php";
 
@@ -46,18 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     try {
-       
-        $sql = "SELECT * FROM users WHERE login = :login";
+        $sql = "SELECT * FROM users WHERE login = :login AND email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-         
+            // Vérifie le mot de passe hashé
             if (password_verify($password, $user['mot_de_passe'])) {
                 $_SESSION['login'] = $user['login'];
+                echo "Connexion réussie !";
+                // Redirection vers la page d'accueil
             } else {
                 echo "Votre nom d'utilisateur ou votre mot de passe est incorrect";
             }
@@ -69,4 +70,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
