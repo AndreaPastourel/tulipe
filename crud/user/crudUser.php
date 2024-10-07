@@ -23,7 +23,7 @@ $stmt=$pdo->query("SELECT * FROM users ORDER BY id");
 <html>
 
 
-<body >
+<body background="/tulipe/img/wallpaper-tulipe.jpg">
 
     <div class="crud">
     <h1>CRUD utilisateurs</h1>
