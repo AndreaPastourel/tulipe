@@ -17,14 +17,14 @@
 			</div>
 						<div class="input">
 				<input type="password" class="input-field" required/>
-				<label class="input-label">Password</label>
+				<label class="input-label">Mot de passe</label>
 			</div>
 			<div class="action">
 				<button class="action-button">Se connecter</button>
 			</div>
 		</form>
 		<div class="card-info">
-			<p>By signing up you are agreeing to our <a href="#">Terms and Conditions</a></p>
+			<p>En vous inscrivant, vous acceptez nos <a href="#">conditions générales</a></p>
 		</div> 
 	</div>
 </div></body>
