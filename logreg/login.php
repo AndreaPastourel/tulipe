@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '../conn/dbConnect.php'); // Connexion à la base de données
+require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php'); // Connexion à la base de données
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user['role'];
         $_SESSION['id'] = $user['id']; 
         $_SESSION['groupe'] = $user['groupe']; 
-        header("Location: ../crud/tulipe/crudTulipe.php"); 
+        header("Location: /tulipe/crud/tulipes/index.php"); 
         exit();
     } else {
         echo "<p style='color:red;'>Login, email ou mot de passe incorrect.</p>"; 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '../headFoot/header.php')) ?>
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php')) ?>
 
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 <div class="container">
