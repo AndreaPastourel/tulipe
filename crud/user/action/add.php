@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             // Préparer et exécuter la requête d'insertion
             $stmt = $pdo->prepare("INSERT INTO users (groupe,login,email,password,role) VALUES (?, ?, ?, ?,?)");
-            $stmt->execute([$username, $hashed_password, $email, $role]);
+            $stmt->execute([$groupe,$login,$email, $hashed_password,$role]);
 
             // Message de succès
             echo "<p style='color:green;'>L'utilisateur $username a été ajouté avec succès.</p>";

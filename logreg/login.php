@@ -45,20 +45,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     try {
-        $sql = "SELECT * FROM users WHERE login = :login AND email = :email";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':login', $login);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
+		// Préparation de la requête pour récupérer les informations de l'utilisateur
+		$stmt = $pdo->prepare("SELECT * FROM users WHERE username=?");
+		$stmt->execute([$username]);
 
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($stmt->rowCount() > 0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$hashed_password = $row['password']; // Récupération du mot de passe haché
 
-            // Vérifie le mot de passe hashé
-            if (password_verify($password, $user['mot_de_passe'])) {
-                $_SESSION['login'] = $user['login'];
-                echo "Connexion réussie !";
-                // Redirection vers la page d'accueil
+			// Vérification du mot de passe haché avec password_verify()
+			if (password_verify($password, $hashed_password)) {
+				$id = $row['id'];
+				$role = $row['role'];
+
+				session_start();
+				$_SESSION['username'] = $username;
+				$_SESSION['id'] = $id;
+				$_SESSION['role'] = $role;
+
+				header("Location:../index.php");
             } else {
                 echo "Votre nom d'utilisateur ou votre mot de passe est incorrect";
             }
