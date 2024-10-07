@@ -41,14 +41,15 @@ session_start();
 include "../conn/dbConnect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $login = $_POST['login'];
+	$email = $_POST['email'];
     $password = $_POST['password'];
 
     try {
        
-        $sql = "SELECT * FROM utilisateurs WHERE nom_utilisateur = :username";
+        $sql = "SELECT * FROM users WHERE login = :login";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':login', $login);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
@@ -56,11 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
          
             if (password_verify($password, $user['mot_de_passe'])) {
-                $_SESSION['username'] = $user['nom_utilisateur'];
-                $_SESSION['role'] = $user['role'];
-                echo "Vous êtes connecté en tant que " . $username;
-                header("Location: ../admin/consulter_tournois.php");
-                exit();
+                $_SESSION['login'] = $user['login'];
             } else {
                 echo "Votre nom d'utilisateur ou votre mot de passe est incorrect";
             }
