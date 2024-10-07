@@ -14,6 +14,8 @@
 
     <div class="crud">
     <h1>Ajouter des données</h1>
+    <?php echo isset($messageValide) ? "<span style='color:green;'>$messageValide</span>" : '';?>
+    <?php echo isset($messageErreur) ? "<span style='color:red;'>$messageErreur</span>" : '';?>
 
         <p><a href="/tulipe/crud/user/crudUser.php">Retour en arriere</a></p>
 
@@ -35,7 +37,7 @@
         <tr>
                 <td>Password</td>
                 <td>
-                    <div class="password-container">
+                    <div >
                     <input type="password" name="password" id="password" required>
                     <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
                     </div>
