@@ -1,6 +1,8 @@
 
 <link href="tulipe/css/style.css" rel="stylesheet" />
 
+<link href="tulipe/css/bootsrap.css" rel="stylesheet" />
+
   
   
   
