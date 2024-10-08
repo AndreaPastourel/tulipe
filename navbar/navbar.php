@@ -21,14 +21,14 @@
   <div id="myNav" class="overlay">
     <div class="overlay-content">
       <a href="index.php">Accueil</a>
-      <a href="inscription_tournois/consulter_tournois_joueurs.php">Tournoi</a>
       <?php if (isset($_SESSION['username'])): ?>
-        <a href="admin/consulter_tournois.php">Consulter les tournois</a>
-        <?php if ($_SESSION['role'] == 'administrateur'): ?>
-          <a href="gestion_utilisateurs/consulter_utilisateurs.php"> Gestion des utilisateurs </a>
+        <a href="#">Connecté(e)</a>
+        <a href="tulipe">Consulter les élèves</a>
+        <?php if ($_SESSION['role'] == 'Professeur'): ?>
+          <a href="tulipe/crud/user/crudUser.php">Consulter les élèves</a>
           <?php endif; ?>
         <a href="reglog/logout.php">Déconnexion</a>
-          <a href="reglog/login.php">Connexion</a>
+          <a href="tulipe/logreg/login.php">Connexion</a>
       <?php endif; ?> <!-- Ajout de endif ici -->
     </div>
   </div>
