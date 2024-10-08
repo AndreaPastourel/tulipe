@@ -8,6 +8,6 @@ if(isset($_GET['id'])){
     $stmt = $pdo->prepare("DELETE FROM tulipes WHERE id = ?");
     $stmt->execute([$id]);
 
-    header("Location: /tulipe/crud/tulipes/index.php");
+    header("Location: /tulipe/crud/tulipe/crudTulipe.php");
 }
 ?>

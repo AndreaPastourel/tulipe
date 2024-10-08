@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
     <div class="form">
         <h1>Ajouter une Tulipe</h1>
 
-        <p><a href="/tulipe/crud/user/crudUser.php">Retour en arrière</a></p>
+        <p><a href="/tulipe/crud/tulipe/crudTulipe.php">Retour en arrière</a></p>
 
         <!-- Affichage des messages de succès ou d'erreur -->
         <?php 
