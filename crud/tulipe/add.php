@@ -11,24 +11,39 @@ if (!isset($_SESSION['username'])) {
 
 if (isset($_POST['submit'])) {
     $quantite = $_POST['quantite'];
-    $prix = $_POST['prix'];
     $moyen_de_paiement = $_POST['moyen_de_paiement'];
     $est_paye = isset($_POST['est_paye']) ? 1 : 0;
     $idusers = $_SESSION['id']; // ID de l'utilisateur courant
-    $signature = $_POST['signature'];
+    $signature = $_POST['signature']; // Récupérer la signature en base64
+
+    // Vérifier si une signature a été fournie
+    if (!empty($signature)) {
+        // Convertir la signature base64 en un fichier image
+        $signature = str_replace('data:image/png;base64,', '', $signature);
+        $signature = str_replace(' ', '+', $signature);
+        $data = base64_decode($signature);
+        $file_name = 'signature_' . time() . '.png'; // Nom du fichier unique
+        $file_path = $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/' . $file_name;
+
+        // Sauvegarder l'image dans le dossier uploads
+        file_put_contents($file_path, $data);
+    } else {
+        $file_name = null; // Si pas de signature
+    }
 
     // Insertion dans la base de données
-    $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, prix, moyen_de_paiement, est_paye, idusers, signature) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$quantite, $prix, $moyen_de_paiement, $est_paye, $idusers, $signature]);
-
-    header("Location: index.php");
-    exit();
+    try {
+        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, signature) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $file_name]);
+        $messageValide = "La commande a bien été ajoutée avec succès.";
+    } catch (PDOException $e) {
+        $messageErreur = "ERREUR: " . $e->getMessage();
+    }
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-
 
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 
@@ -37,6 +52,16 @@ if (isset($_POST['submit'])) {
 
         <p><a href="/tulipe/crud/user/crudUser.php">Retour en arrière</a></p>
 
+        <!-- Affichage des messages de succès ou d'erreur -->
+        <?php 
+        if (isset($messageValide)) {
+            echo "<span style='color:green;'>$messageValide</span>";
+        }
+        if (isset($messageErreur)) {
+            echo "<span style='color:red;'>$messageErreur</span>";
+        }
+        ?>
+
         <!-- Début du formulaire -->
         <form action="add.php" method="post" enctype="multipart/form-data">
             <table>
@@ -44,13 +69,16 @@ if (isset($_POST['submit'])) {
                     <td>Quantité</td>
                     <td><input type="number" name="quantite" required></td>
                 </tr>
-                <tr>
-                    <td>Prix</td>
-                    <td><input type="text" name="prix" required></td>
-                </tr>
+              
                 <tr>
                     <td>Moyen de paiement</td>
-                    <td><input type="text" name="moyen_de_paiement" required></td>
+                    <td>
+                        <select name="moyen_de_paiement" id="role" required>
+                            <option value="">--Choisir une option--</option>
+                            <option value="espece">Espèce</option>
+                            <option value="cheque">Chèque</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Est payé</td>
@@ -59,7 +87,7 @@ if (isset($_POST['submit'])) {
                 <tr>
                     <td>Signature</td>
                     <td>
-                        <canvas id="signature-pad" class="signature-pad"></canvas><br>
+                        <canvas id="signature-pad" class="signature-pad" style="border: 1px solid #000;"></canvas><br>
                         <button type="button" id="clear-btn">Effacer</button>
                         <input type="hidden" id="signature" name="signature">
                     </td>
@@ -72,10 +100,6 @@ if (isset($_POST['submit'])) {
         <!-- Fin du formulaire -->
 
     </div>
-
-    <!-- footer section -->
-    <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/arrasGames/headFoot/footer.php'); ?>
-    <!-- footer section -->
 
     <script>
         const canvas = document.getElementById('signature-pad');
@@ -101,8 +125,8 @@ if (isset($_POST['submit'])) {
 
         function stopDrawing() {
             drawing = false;
-            const dataURL = canvas.toDataURL(); // Convertir le dessin en image
-            signatureInput.value = dataURL; // Stocker dans un input caché
+            const dataURL = canvas.toDataURL('image/png'); // Convertir le dessin en image PNG
+            signatureInput.value = dataURL; // Stocker dans l'input caché
         }
 
         function draw(event) {
@@ -120,5 +144,4 @@ if (isset($_POST['submit'])) {
 
 </body>
 
-</html>
 </html>
