@@ -54,7 +54,7 @@ else if($userRole=="Eleve"){
                     echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
                     echo "<td>" . htmlspecialchars($tulipe['moyen_de_paiement']) . "</td>";
                     echo "<td>" . ($tulipe['est_paye'] ? 'Oui' : 'Non') . "</td>";
-                    echo "<td>" . htmlspecialchars($tulipe['signature']) . "</td>";
+                    echo "<td><img src='/tulipe/uploads/" . $tulipe['signature'] . "' alt='".$tulipe['signature']."' style='width:50px;height:50px;'></td>";
                     echo "<td><a href='edit.php?id=" . $tulipe['id'] . "'>Modifier</a> | <a href='delete.php?id=" . $tulipe['id'] . "' onClick='return confirm(\"Etes vous sûr de vouloir supprimer ?\")'>Supprimer</a></td>";
                     echo "</tr>";
                 }
