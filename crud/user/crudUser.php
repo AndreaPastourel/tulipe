@@ -1,10 +1,10 @@
 <?php 
-    //if (session_status() == PHP_SESSION_NONE) {
-   // session_start();}
-   //if(!isset($_SESSION['username']) || $_SESSION['role']!="professeur"){
-    //  header("Location: /tulipe/unauthorized.php");
-    //   exit();
-    //}
+    if (session_status() == PHP_SESSION_NONE) {
+   session_start();}
+    if(!isset($_SESSION['username']) || $_SESSION['role']!="Professeur"){
+     header("Location: /tulipe/unauthorized.php");
+      exit();
+    }
     ?>
 
 
