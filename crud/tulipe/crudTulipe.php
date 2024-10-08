@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php');
+require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'));
 
 
 // Vérifiez si les clés de session existent
@@ -28,14 +29,10 @@ else if($userRole=="Eleve"){
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>CRUD Tulipes - Utilisateur</title>
-    <link rel="stylesheet" href="/tulipe/css/style.css"> <!-- Lien vers votre fichier CSS -->
-</head>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
     <div class="crud">
-        <h1>CRUD Tulipes - Utilisateur</h1>
-        <h2>Ajouter des tulipes</h2>
+        <h1>CRUD Tulipes </h1>
+        <p><a href="/tulipe/crud/tulipe/add.php">Ajouter des Commande</a></p>
         <table>
             <tr>
                 <th>ID</th>
