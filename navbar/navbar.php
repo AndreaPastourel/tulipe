@@ -1,7 +1,6 @@
-=
-=
+
 <link href="tulipe/css/style.css" rel="stylesheet" />
-=
+
   
   
   
