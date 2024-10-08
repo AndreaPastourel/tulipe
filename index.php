@@ -40,7 +40,8 @@ if (isset($_SESSION['id'])) {
 ?>
 
 <!DOCTYPE html>
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php')) ?>
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php')) ?><?php
+require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php'));?>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 
 <div class="ranking">
