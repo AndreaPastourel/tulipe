@@ -21,16 +21,22 @@
   <div id="myNav" class="overlay">
     <div class="overlay-content">
       <a href="index.php">Accueil</a>
+
       <?php if (isset($_SESSION['username'])): ?>
-        <a href="#">Connecté(e)</a>
+        <!-- Si l'utilisateur est connecté -->
+        <a href="#">Connecté(e) : <?php echo $_SESSION['username']; ?></a>
         <a href="tulipe">Consulter les élèves</a>
         <a href="reglog/logout.php">Déconnexion</a>
+
         <?php if ($_SESSION['role'] == 'Professeur'): ?>
-          <a href="tulipe/crud/user/crudUser.php">Consulter les élèves</a>
-          <?php elseif():  ?>
-            <a href="tulipe/logreg/login.php">Connexion</a>
-          <?php endif; ?>
-      <?php endif; ?> <!-- Ajout de endif ici -->
+          <a href="/tulipe/crud/user/crudUser.php">Consulter les élèves</a>
+        <?php endif; ?>
+      
+      <?php else: ?>
+        <!-- Si l'utilisateur n'est pas connecté -->
+        <a href="/tulipe/logreg/login.php">Connexion</a>
+      <?php endif; ?>
+      
     </div>
   </div>
 </div>
