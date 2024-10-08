@@ -33,6 +33,7 @@
 </header>
 <!-- end header section -->
 
+
 <!-- jQuery -->
 <script src="/tulipe/js/jquery-3.4.1.min.js"></script>
 <!-- bootstrap js -->
