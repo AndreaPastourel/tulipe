@@ -18,7 +18,7 @@
                             <a href="/tulipe/index.php">Classement</a>
 
                             <?php if (isset($_SESSION['username'])): ?>
-                                <!-- Si l'utilisateur est connecté -->
+
                                 <a href="#">Connecté(e) : <?php echo $_SESSION['username']; ?></a>
                                 
                                 <?php if ($_SESSION['role'] == 'Professeur'): ?>
@@ -29,7 +29,6 @@
                                 
                                 <a href="/tulipe/logreg/logout.php">Déconnexion</a>
                             <?php else: ?>
-                                <!-- Si l'utilisateur n'est pas connecté -->
                                 <a href="/tulipe/logreg/login.php">Connexion</a>
                             <?php endif; ?>
 
