@@ -15,7 +15,7 @@
                     </button>
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
-                            <a href="index.php">Accueil</a>
+                            <a href="/tulipe/index.php">Classement</a>
 
                             <?php if (isset($_SESSION['username'])): ?>
                                 <!-- Si l'utilisateur est connecté -->
@@ -23,10 +23,11 @@
                                 
                                 <?php if ($_SESSION['role'] == 'Professeur'): ?>
                                     <a href="/tulipe/crud/user/crudUser.php">Consulter les élèves</a>
+                                <?php elseif ($_SESSION['role'] == 'Eleve'): ?>
+                                    <a href="/tulipe/crud/tulipe/crudTulipe.php">Bons de commandes</a>
                                 <?php endif; ?>
                                 
                                 <a href="/tulipe/logreg/logout.php">Déconnexion</a>
-
                             <?php else: ?>
                                 <!-- Si l'utilisateur n'est pas connecté -->
                                 <a href="/tulipe/logreg/login.php">Connexion</a>
@@ -40,6 +41,7 @@
     </div>
 </header>
 <!-- end header section -->
+
 
 <!-- jQuery -->
 <script src="/tulipe/js/jquery-3.4.1.min.js"></script>
