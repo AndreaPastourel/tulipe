@@ -28,9 +28,6 @@
           <a href="gestion_utilisateurs/consulter_utilisateurs.php"> Gestion des utilisateurs </a>
           <?php endif; ?>
         <a href="reglog/logout.php">Déconnexion</a>
-          <span>Connecté en tant que <?php echo htmlspecialchars($_SESSION['username']); ?></span> <br>
-          <span>Votre role est : <?php echo htmlspecialchars($_SESSION['role']); ?></span>
-      <?php else: ?>
           <a href="reglog/login.php">Connexion</a>
       <?php endif; ?> <!-- Ajout de endif ici -->
     </div>
