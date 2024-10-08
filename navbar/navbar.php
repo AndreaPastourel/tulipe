@@ -24,10 +24,10 @@
       <?php if (isset($_SESSION['username'])): ?>
         <a href="#">Connecté(e)</a>
         <a href="tulipe">Consulter les élèves</a>
+        <a href="reglog/logout.php">Déconnexion</a>
         <?php if ($_SESSION['role'] == 'Professeur'): ?>
           <a href="tulipe/crud/user/crudUser.php">Consulter les élèves</a>
           <?php endif; ?>
-        <a href="reglog/logout.php">Déconnexion</a>
           <a href="tulipe/logreg/login.php">Connexion</a>
       <?php endif; ?> <!-- Ajout de endif ici -->
     </div>
