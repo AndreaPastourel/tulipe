@@ -22,35 +22,69 @@ if (isset($_GET['id'])) {
 
     if (isset($_POST['submit'])) {
         $quantite = $_POST['quantite'];
-        $prix = $_POST['prix'];
+        $adresse = $_POST['adresse'];  // Nouvelle adresse
+        $client = $_POST['client'];    // Nom du client
+        $semaines = isset($_POST['semaines']) ? $_POST['semaines'] : []; // Sélection des semaines
         $moyen_de_paiement = $_POST['moyen_de_paiement'];
         $est_paye = isset($_POST['est_paye']) ? 1 : 0;
+        $uploads_dir = $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/';  // Dossier de stockage des signatures
 
-        // Gérer la mise à jour de la signature s'il y a un fichier uploadé
-        if (!empty($_FILES['signature']['name'])) {
-            $signature_tmp = $_FILES['signature']['tmp_name'];
-            $signature_name = 'signature_' . time() . '.png';  // Nom unique pour éviter les collisions
-            move_uploaded_file($signature_tmp, $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/' . $signature_name);
+        // Gestion de la signature dessinée
+        $signature = $_POST['signature'];  // Signature sous forme de base64
+
+        // Si la signature est modifiée (si le champ n'est pas vide)
+        if (!empty($signature)) {
+            // Supprimer l'ancienne signature s'il y en a une
+            if (!empty($res['signature']) && file_exists($uploads_dir . $res['signature'])) {
+                unlink($uploads_dir . $res['signature']);  // Supprimer l'ancienne signature
+            }
+
+            // Générer un nom de fichier unique pour la nouvelle signature
+            $signature_filename = 'signature_' . time() . '.png';
+
+            // Extraire les données de l'image base64
+            $signature = str_replace('data:image/png;base64,', '', $signature);
+            $signature = str_replace(' ', '+', $signature);
+            $signature_data = base64_decode($signature);
+
+            // Enregistrer la nouvelle signature dans le dossier uploads
+            file_put_contents($uploads_dir . $signature_filename, $signature_data);
         } else {
-            // Si aucune nouvelle signature n'est fournie, garder l'ancienne
-            $signature_name = $res['signature'];
+            // Si la signature n'est pas modifiée, garder l'ancienne
+            $signature_filename = $res['signature'];
         }
 
-        // Mise à jour de la tulipe
-        $stmt = $pdo->prepare("UPDATE tulipes SET quantite = ?, prix = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
-        $stmt->execute([$quantite, $prix, $moyen_de_paiement, $est_paye, $signature_name, $id]);
+        // Conversion du tableau des semaines en JSON pour la base de données
+        $semaines_json = json_encode($semaines);
 
-        header("Location: index.php");
+        // Calcul automatique du prix (ajustez cette logique selon vos besoins)
+        $prix = $quantite * 10;  // Exemple : chaque tulipe coûte 10€
+
+        // Mise à jour de la tulipe avec les nouveaux champs
+        $stmt = $pdo->prepare("UPDATE tulipes SET quantite = ?, prix = ?, adresse = ?, client = ?, semaines = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
+        $stmt->execute([$quantite, $prix, $adresse, $client, $semaines_json, $moyen_de_paiement, $est_paye, $signature_filename, $id]);
+
+        header("Location:/tulipe/crud/tulipe/crudTulipe.php");
         exit();
     }
 }
 ?>
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
+
 <!DOCTYPE html>
 <html>
+    
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
 <?php require_once ($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php');?>
 <head>
     <title>Modifier la Tulipe</title>
+    <style>
+        .signature-pad {
+            border: 1px solid #ccc;
+            width: 300px;
+            height: 150px;
+            cursor: crosshair;
+        }
+    </style>
 </head>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
 <div class='form'>
@@ -58,17 +92,36 @@ if (isset($_GET['id'])) {
     <form method="post" action="edit.php?id=<?php echo $id; ?>" enctype="multipart/form-data">
         <table>
             <tr>
+                <td><label>Client:</label></td>
+                <td><input type="text" name="client" value="<?php echo htmlspecialchars($res['client']); ?>" required></td>
+            </tr>
+            <tr>
+                <td><label>Adresse:</label></td>
+                <td><input type="text" name="adresse" value="<?php echo htmlspecialchars($res['adresse']); ?>" required></td>
+            </tr>
+            <tr>
                 <td><label>Quantité:</label></td>
                 <td><input type="number" name="quantite" value="<?php echo htmlspecialchars($res['quantite']); ?>" required></td>
             </tr>
             <tr>
-                <td><label>Prix:</label></td>
-                <td><input type="text" name="prix" value="<?php echo htmlspecialchars($res['prix']); ?>" required></td>
+                <td><label>Semaines:</label></td>
+                <td>
+                    <?php 
+                    $semaines = isset($res['semaines']) ? json_decode($res['semaines'], true) : [];
+                    ?>
+                    <input type="checkbox" name="semaines[]" value="1" <?php echo in_array('1', $semaines) ? 'checked' : ''; ?>> Semaine 1<br>
+                    <input type="checkbox" name="semaines[]" value="2" <?php echo in_array('2', $semaines) ? 'checked' : ''; ?>> Semaine 2<br>
+                    <input type="checkbox" name="semaines[]" value="3" <?php echo in_array('3', $semaines) ? 'checked' : ''; ?>> Semaine 3
+                </td>
             </tr>
-            <tr>
-                <td><label>Moyen de paiement:</label></td>
-                <td><input type="text" name="moyen_de_paiement" value="<?php echo htmlspecialchars($res['moyen_de_paiement']); ?>" required></td>
-            </tr>
+            <td>Moyen de Paiment</td>
+            <td>
+                <select name="moyen_de_paiement" id="moyen_de_paiement">
+                    <option value="<?php echo $res['moyen_de_paiement']; ?>"><?php echo $res['moyen_de_paiement']; ?></option>
+                    <option value="cheque">cheque</option>
+                    <option value="espece">espece</option>
+                </select>
+            </td>
             <tr>
                 <td><label>Est payé:</label></td>
                 <td><input type="checkbox" name="est_paye" <?php if ($res['est_paye']) echo 'checked'; ?>></td>
@@ -82,8 +135,12 @@ if (isset($_GET['id'])) {
                 </td>
             </tr>
             <tr>
-                <td><label>Changer la signature (facultatif) :</label></td>
-                <td><input type="file" name="signature"></td>
+                <td><label>Changer la signature (dessiner) :</label></td>
+                <td>
+                    <canvas id="signature-pad" class="signature-pad"></canvas><br>
+                    <button type="button" id="clear-btn">Effacer</button>
+                    <input type="hidden" name="signature" id="signature">
+                </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center;">
@@ -92,6 +149,48 @@ if (isset($_GET['id'])) {
             </tr>
         </table>
     </form>
-    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('signature-pad');
+    const clearButton = document.getElementById('clear-btn');
+    const signatureInput = document.getElementById('signature');
+    const context = canvas.getContext('2d');
+
+    let drawing = false;
+
+    // Redimensionner le canvas
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 150;
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mousemove', draw);
+
+    function startDrawing(event) {
+        drawing = true;
+        context.beginPath();
+        context.moveTo(event.offsetX, event.offsetY);
+    }
+
+    function stopDrawing() {
+        drawing = false;
+        const dataURL = canvas.toDataURL('image/png'); // Convertir le dessin en image PNG
+        signatureInput.value = dataURL; // Stocker dans l'input caché
+    }
+
+    function draw(event) {
+        if (!drawing) return;
+        context.lineTo(event.offsetX, event.offsetY);
+        context.stroke();
+    }
+
+    // Effacer le dessin
+    clearButton.addEventListener('click', function () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        signatureInput.value = ''; // Réinitialiser l'input caché
+    });
+</script>
+
 </body>
 </html>
