@@ -25,7 +25,7 @@
                                     <a href="/tulipe/crud/user/crudUser.php">Consulter les élèves</a>
                                 <?php endif; ?>
                                 
-                                <a href="/tulipe/reglog/logout.php">Déconnexion</a>
+                                <a href="/tulipe/logreg/logout.php">Déconnexion</a>
 
                             <?php else: ?>
                                 <!-- Si l'utilisateur n'est pas connecté -->
