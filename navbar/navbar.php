@@ -27,8 +27,9 @@
         <a href="reglog/logout.php">Déconnexion</a>
         <?php if ($_SESSION['role'] == 'Professeur'): ?>
           <a href="tulipe/crud/user/crudUser.php">Consulter les élèves</a>
+          <?php else():  ?>
+            <a href="tulipe/logreg/login.php">Connexion</a>
           <?php endif; ?>
-          <a href="tulipe/logreg/login.php">Connexion</a>
       <?php endif; ?> <!-- Ajout de endif ici -->
     </div>
   </div>
