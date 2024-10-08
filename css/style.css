@@ -683,3 +683,57 @@ HEAD
     box-shadow: 0 0 5px #6a1b9a;
 
   }
+
+
+.ranking {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ranking h1 {
+    text-align: center;
+    color: #6a1b9a;
+    margin-bottom: 20px;
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.ranking-table thead th {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 12px;
+}
+
+.ranking-table tbody tr {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+}
+
+.ranking-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.ranking-table tbody td {
+    padding: 12px;
+}
+
+.ranking-table .highlight {
+    background-color: #e1bee7; /* Mettre en évidence l'utilisateur connecté */
+}
+
+.user-rank {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #6a1b9a;
+    margin-top: 20px;
+}

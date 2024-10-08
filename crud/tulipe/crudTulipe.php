@@ -17,8 +17,8 @@ $userRole = $_SESSION['role'];
 
 // Préparer la requête pour récupérer les tulipes de l'utilisateur
 if  ($userRole=="Professeur"){
-$stmt = $pdo->prepare("SELECT * FROM tulipes WHERE idusers = ?");
-$stmt->execute([$userId]);
+$stmt = $pdo->prepare("SELECT tulipes.*, users.groupe FROM tulipes INNER JOIN users ORDER BY groupe");
+$stmt->execute();
 $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);}
 
 else if($userRole=="Eleve"){
@@ -29,6 +29,7 @@ else if($userRole=="Eleve"){
 ?>
 
 <!DOCTYPE html>
+
 <html>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
     <div class="crud">
@@ -37,6 +38,7 @@ else if($userRole=="Eleve"){
         <table>
             <tr>
                 <th>ID</th>
+                <th>Groupe</th>
                 <th>Quantité</th>
                 <th>Prix</th>
                 <th>Moyen de paiement</th>
@@ -50,6 +52,7 @@ else if($userRole=="Eleve"){
                 foreach ($tulipes as $tulipe) {
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($tulipe['id']) . "</td>";
+                    echo "<td>" . htmlspecialchars($tulipe['groupe']) . "</td>";
                     echo "<td>" . htmlspecialchars($tulipe['quantite']) . "</td>";
                     echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
                     echo "<td>" . htmlspecialchars($tulipe['moyen_de_paiement']) . "</td>";
