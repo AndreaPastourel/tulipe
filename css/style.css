@@ -7,7 +7,7 @@
 body {
     font-family: "DM Sans", sans-serif;
     line-height: 1.5;
-    background-image: #f1f3fb;
+    background-color: #f1f3fb;
     padding: 0 2rem;
 }
 
@@ -15,7 +15,6 @@ img {
     max-width: 100%;
     display: block;
 }
-
 
 input {
     appearance: none;
@@ -140,9 +139,6 @@ input {
     text-decoration: none;
 }
 
-
-
-
 .crud {
     background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
     width: 80%;
@@ -154,17 +150,9 @@ input {
 
 .crud h1 {
     text-align: center;
-    color: #6a1b9a; /* Corresponding to a purple theme */
-}
-/* Réduire la largeur de la colonne des mots de passe */
-.crud table td.password {
-    width: 150px; /* Ajustez cette valeur à votre convenance */
-    word-break: break-all;
+    color: #6a1b9a;
 }
 
-.crud table th.password {
-    width: 150px; /* Ajustez cette valeur à votre convenance */
-}
 .crud p a {
     text-decoration: none;
     background-color: #6a1b9a;
@@ -209,18 +197,64 @@ input {
     text-decoration: underline;
 }
 
-.form {
-    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc avec opacité */
-    width: 50%;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre portée */
+/* Responsive Table to Cards on Small Screens */
+@media (max-width: 768px) {
+    .crud table, .crud thead, .crud tbody, .crud th, .crud td, .crud tr {
+        display: block;
+    }
+
+    .crud thead {
+        display: none; /* Cache l'en-tête de table */
+    }
+
+    .crud tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: white;
+    }
+
+    .crud td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    .crud td::before {
+        content: attr(data-label); /* Utilise les attributs data-label pour les labels des colonnes */
+        position: absolute;
+        left: 15px;
+        top: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #6a1b9a;
+    }
+
+    .crud td a {
+        color: #6a1b9a;
+        text-decoration: none;
+    }
+
+    .crud td a:hover {
+        text-decoration: underline;
+    }
 }
 
-.form h2 {
+.form {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form h2, .form h1 {
     text-align: center;
-    color: #6a1b9a; /* Couleur similaire à la page CRUD */
+    color: #6a1b9a;
     margin-bottom: 20px;
 }
 
@@ -233,9 +267,15 @@ input {
 .form table td {
     padding: 12px;
     font-size: 16px;
+    vertical-align: middle;
 }
 
-.form input[type="text"], .form input[type="email"], .form input[type="password"], .form select {
+.form input[type="text"], 
+.form input[type="email"], 
+.form input[type="password"], 
+.form input[type="number"], 
+.form select, 
+.form canvas {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -308,6 +348,109 @@ input {
 
 #clear-btn:hover {
     background-color: #4a148c;
+}
+
+.form input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6a1b9a;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.form input[type="checkbox"]:checked {
+    background-color: #6a1b9a;
+    border: 2px solid #6a1b9a;
+}
+
+.form input[type="checkbox"]:checked::before {
+    content: '\2713';
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.form input[type="checkbox"]:focus {
+    box-shadow: 0 0 5px #6a1b9a;
+}
+
+/* Media Queries for Responsive Design */
+
+@media (max-width: 1200px) {
+    .form, .crud {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .form, .crud {
+        width: 90%;
+    }
+
+    .card, .crud, .form {
+        padding: 15px;
+    }
+
+    .card-image {
+        padding-bottom: 50%;
+        background-size: cover;
+    }
+
+    .card-heading {
+        font-size: 1.5rem;
+    }
+
+    .input-field {
+        font-size: 1rem;
+    }
+
+    .action-button {
+        font-size: 1rem;
+    }
+
+    .signature-pad {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form, .crud {
+        width: 100%;
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .card-heading {
+        font-size: 1.25rem;
+    }
+
+    .card {
+        box-shadow: none;
+    }
+
+    .input-field {
+        font-size: 0.875rem;
+    }
+
+    .action-button {
+        font-size: 0.875rem;
+        padding: 0.75em;
+    }
+
+    .signature-pad {
+        height: 120px;
+    }
 }
 
 HEAD
