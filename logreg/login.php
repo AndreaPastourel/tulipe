@@ -14,11 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifier si l'utilisateur existe et valider le mot de passe
     if ($user) {
-        // Débogage : afficher les détails de l'utilisateur
-        echo "<pre>";
-        print_r($user);
-        echo "</pre>";
-
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['login'];
             $_SESSION['role'] = $user['role'];
