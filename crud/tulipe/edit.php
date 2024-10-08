@@ -39,10 +39,28 @@ if (isset($_GET['id'])) {
 
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Modifier la Tulipe</title>
+</head>
 <body>
     <h2>Modifier la Tulipe</h2>
     <form method="post" action="edit.php?id=<?php echo $id; ?>">
         <label>Quantité:</label><br>
         <input type="number" name="quantite" value="<?php echo $res['quantite']; ?>" required><br>
+        
         <label>Prix:</label><br>
-        <input type="text" name="prix" value="<?php echo $
+        <input type="text" name="prix" value="<?php echo $res['prix']; ?>" required><br>
+        
+        <label>Moyen de paiement:</label><br>
+        <input type="text" name="moyen_de_paiement" value="<?php echo $res['moyen_de_paiement']; ?>" required><br>
+        
+        <label>Est payé:</label><br>
+        <input type="checkbox" name="est_paye" <?php if ($res['est_paye']) echo 'checked'; ?>><br>
+        
+        <label>Signature:</label><br>
+        <input type="text" name="signature" value="<?php echo $res['signature']; ?>" required><br>
+        
+        <input type="submit" name="submit" value="Mettre à jour">
+    </form>
+</body>
+</html>
