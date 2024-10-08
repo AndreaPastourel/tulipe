@@ -8,7 +8,8 @@
     ?>
 
 
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'));
+require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php'));?>
 
 
 <?php

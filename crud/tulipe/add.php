@@ -2,6 +2,8 @@
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php');
 require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'));
+require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php'));
+
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['username'])) {

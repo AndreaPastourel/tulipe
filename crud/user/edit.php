@@ -1,14 +1,15 @@
 <?php 
-    //if (session_status() == PHP_SESSION_NONE) {
-   // session_start();}
-   //if(!isset($_SESSION['username']) || $_SESSION['role']!="professeur"){
-    //  header("Location: /tulipe/unauthorized.php");
-    //   exit();
-    //}
+    if (session_status() == PHP_SESSION_NONE) {
+   session_start();}
+    if(!isset($_SESSION['username']) || $_SESSION['role']!="Professeur"){
+     header("Location: /tulipe/unauthorized.php");
+      exit();
+    }
     ?>
 
 
-<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'))?>
+<?php require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'));
+require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php'));?>
 
 <?php
 //Include the database connection file
