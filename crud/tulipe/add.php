@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php');
 require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/headFoot/header.php'));
 require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php'));
 
-
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['username'])) {
     header("Location: /tulipe/login.php");
@@ -13,12 +12,15 @@ if (!isset($_SESSION['username'])) {
 
 if (isset($_POST['submit'])) {
     $quantite = $_POST['quantite'];
+    $client = $_POST['client']; // Nouveau champ client
     $moyen_de_paiement = $_POST['moyen_de_paiement'];
     $est_paye = isset($_POST['est_paye']) ? 1 : 0;
     $idusers = $_SESSION['id']; // ID de l'utilisateur courant
-    $signature = $_POST['signature']; // Récupérer la signature en base64
+    $signature = $_POST['signature']; // Récupérer la signature en base64 (si fournie)
+    $adresse = $_POST['adresse']; // Nouvelle adresse
+    $semaines = isset($_POST['semaine']) ? json_encode($_POST['semaine']) : ''; // Semaine sélectionnée
 
-    // Vérifier si une signature a été fournie
+    // Gestion de la signature : vérifier si une signature a été fournie
     if (!empty($signature)) {
         // Convertir la signature base64 en un fichier image
         $signature = str_replace('data:image/png;base64,', '', $signature);
@@ -35,8 +37,8 @@ if (isset($_POST['submit'])) {
 
     // Insertion dans la base de données
     try {
-        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, signature) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $file_name]);
+        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $file_name, $adresse, $semaines, $client]);
         $messageValide = "La commande a bien été ajoutée avec succès.";
     } catch (PDOException $e) {
         $messageErreur = "ERREUR: " . $e->getMessage();
@@ -68,10 +70,13 @@ if (isset($_POST['submit'])) {
         <form action="add.php" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
+                    <td>Client</td>
+                    <td><input type="text" name="client" required></td>
+                </tr>
+                <tr>
                     <td>Quantité</td>
                     <td><input type="number" name="quantite" required></td>
                 </tr>
-              
                 <tr>
                     <td>Moyen de paiement</td>
                     <td>
@@ -86,8 +91,23 @@ if (isset($_POST['submit'])) {
                     <td>Est payé</td>
                     <td><input type="checkbox" name="est_paye"></td>
                 </tr>
+                <!-- Nouveau champ pour l'adresse -->
                 <tr>
-                    <td>Signature</td>
+                    <td>Adresse</td>
+                    <td><input type="text" name="adresse" required></td>
+                </tr>
+                <!-- Nouveau champ pour la sélection de la semaine -->
+                <tr>
+                    <td>Semaine</td>
+                    <td>
+                        <input type="checkbox" name="semaine[]" value="1"> Semaine 1<br>
+                        <input type="checkbox" name="semaine[]" value="2"> Semaine 2<br>
+                        <input type="checkbox" name="semaine[]" value="3"> Semaine 3
+                    </td>
+                </tr>
+                <!-- Champ pour la signature (facultatif) -->
+                <tr>
+                    <td>Signature (facultatif)</td>
                     <td>
                         <canvas id="signature-pad" class="signature-pad" style="border: 1px solid #000;"></canvas><br>
                         <button type="button" id="clear-btn">Effacer</button>
