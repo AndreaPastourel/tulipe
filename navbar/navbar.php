@@ -1,12 +1,14 @@
+=
+=
+<link href="tulipe/css/style.css" rel="stylesheet" />
+=
+  
+  
+  
   <!-- header section strats -->
   <header class="header_section">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="index.html">
-          <span>
-            CyberGame Arras
-          </span>
-        </a>
         <div class="" id="">
 
         <div class="custom_menu-btn">
