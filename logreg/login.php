@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['id'] = $user['id']; 
             $_SESSION['groupe'] = $user['groupe']; 
-            header("Location: /tulipe/crud/tulipes/index.php"); 
+            header("Location: /tulipe/index.php"); 
             exit();
         } else {
             echo "<p style='color:red;'>Mot de passe incorrect.</p>"; 
