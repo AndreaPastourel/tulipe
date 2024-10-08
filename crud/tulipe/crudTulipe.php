@@ -14,15 +14,20 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['username'])) {
 $userId = $_SESSION['id'];
 $userRole = $_SESSION['role'];
 
-// Préparer la requête pour récupérer les tulipes en fonction du rôle de l'utilisateur
+// Préparer la requête pour récupérer les tulipes en fonction du rôle
 if ($userRole == "Professeur") {
-    // Le professeur voit toutes les tulipes avec les informations de groupe
-    $stmt = $pdo->prepare("SELECT tulipes.*, users.groupe FROM tulipes INNER JOIN users ON tulipes.idusers = users.id ORDER BY users.groupe");
+    // Correction de la requête pour les professeurs avec une jointure correcte
+    $stmt = $pdo->prepare("
+        SELECT tulipes.*, users.groupe 
+        FROM tulipes 
+        INNER JOIN users ON tulipes.idusers = users.id
+        ORDER BY users.groupe
+    ");
     $stmt->execute();
     $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} else if ($userRole == "Eleve") {
-    // Un élève ne voit que ses propres tulipes
-    $stmt = $pdo->prepare("SELECT tulipes.*, users.groupe FROM tulipes INNER JOIN users ON tulipes.idusers = users.id WHERE tulipes.idusers = ?");
+} elseif ($userRole == "Eleve") {
+    // Requête pour les élèves (seulement leurs propres tulipes)
+    $stmt = $pdo->prepare("SELECT * FROM tulipes WHERE idusers = ?");
     $stmt->execute([$userId]);
     $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

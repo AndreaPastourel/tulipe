@@ -21,13 +21,13 @@
   <div id="myNav" class="overlay">
     <div class="overlay-content">
       <a href="index.php">Accueil</a>
-      <?php if (isset($_SESSION['username'])): ?>
-        <a href="#">Connecté(e)</a>
-        <a href="tulipe">Consulter les élèves</a>
         <?php if ($_SESSION['role'] == 'Professeur'): ?>
           <a href="tulipe/crud/user/crudUser.php">Consulter les élèves</a>
           <?php endif; ?>
+          <?php if (isset($_SESSION['username'])): ?>
         <a href="reglog/logout.php">Déconnexion</a>
+        <?php endif; ?> 
+        <?php if (!isset($_SESSION['username'])): ?>
           <a href="tulipe/logreg/login.php">Connexion</a>
       <?php endif; ?> <!-- Ajout de endif ici -->
     </div>
