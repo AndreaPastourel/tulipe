@@ -38,8 +38,8 @@ if (isset($_POST['submit'])) {
 
     // Insertion dans la base de données
     try {
-        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, telephone, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers,$telephone, $file_name, $adresse, $semaines, $client]);
+        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, telephone, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $telephone, $file_name, $adresse, $semaines, $client]);
         $messageValide = "La commande a bien été ajoutée avec succès.";
     } catch (PDOException $e) {
         $messageErreur = "ERREUR: " . $e->getMessage();

@@ -62,9 +62,9 @@ if (isset($_SESSION['groupe'])) {
                 // Si l'utilisateur est connecté, mettre en évidence son groupe
                 $highlight = (isset($_SESSION['groupe']) && $group['groupe'] === $_SESSION['groupe']) ? 'highlight' : '';
                 echo "<tr class='$highlight'>
-                        <td>{$rank}</td>
-                        <td>{$group['groupe']}</td>
-                        <td>{$group['total']}</td>
+                        <td data-label='Rang'> {$rank}</td>
+                        <td data-label='Groupe'>{$group['groupe']}</td>
+                        <td data-label='Montant total'>{$group['total']}</td>
                     </tr>";
                 $rank++;
             }
