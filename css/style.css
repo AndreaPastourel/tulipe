@@ -737,3 +737,8 @@ HEAD
     color: #6a1b9a;
     margin-top: 20px;
 }
+
+.highlight {
+    background-color: #e1bee7 !important;/* Mettre en surbrillance avec une couleur de fond */
+    font-weight: bold;        /* Rendre le texte en gras pour plus de visibilité */
+}

@@ -20,7 +20,7 @@ if ($userRole == "Professeur") {
     // Requête pour les professeurs, récupérant toutes les tulipes avec les informations de groupe et utilisateur
    // Requête pour les professeurs, récupérant toutes les tulipes avec les informations de groupe et utilisateur
 $stmt = $pdo->prepare("
-SELECT tulipes.*, users.groupe, users.client, tulipes.adresse
+SELECT tulipes.*, users.groupe
 FROM tulipes 
 INNER JOIN users ON tulipes.idusers = users.id
 ORDER BY users.groupe
@@ -46,7 +46,7 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body background="/tulipe/img/wallpaper-tulipe.jpg">
     <div class="crud">
-        <h1>CRUD Tulipes</h1>
+        <h1>Bon de Commande</h1>
         <p><a href="/tulipe/crud/tulipe/add.php">Ajouter une commande</a></p>
         <table>
             <tr>
@@ -63,47 +63,51 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Action</th>
             </tr>
             <?php
-          if ($tulipes) {
-            foreach ($tulipes as $tulipe) {
-                echo "<tr>";
-        
-                // Utiliser un fallback si la valeur de 'groupe' est null ou absente
-                $groupe = isset($tulipe['groupe']) ? htmlspecialchars($tulipe['groupe']) : 'Groupe non défini';
-                echo "<td>" . htmlspecialchars($tulipe['id']) . "</td>";
-                echo "<td>" . $groupe . "</td>";
-                echo "<td>" . htmlspecialchars($tulipe['client']) . "</td>";
-                echo "<td>" . htmlspecialchars($tulipe['adresse']) . "</td>";
-                echo "<td>" . htmlspecialchars($tulipe['quantite']) . "</td>";
-        
-                // Gestion des semaines
-                if (!empty($tulipe['semaines'])) {
-                    $semaines = json_decode($tulipe['semaines'], true);
-                    echo "<td>" . implode(", ", $semaines) . "</td>";
-                } else {
-                    echo "<td>Aucune semaine</td>";
-                }
-        
-                echo "<td>" . htmlspecialchars($tulipe['moyen_de_paiement']) . "</td>";
-                echo "<td>" . ($tulipe['est_paye'] ? 'Oui' : 'Non') . "</td>";
-                echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
-        
-                // Gestion des signatures
-                if (!empty($tulipe['signature'])) {
-                    echo "<td><img src='/tulipe/uploads/" . htmlspecialchars($tulipe['signature']) . "' alt='Signature' style='width:50px;height:50px;'></td>";
-                } else {
-                    echo "<td>Pas de signature</td>";
-                }
-        
-                // Liens pour modifier et supprimer
-                echo "<td><a href='/tulipe/crud/tulipe/edit.php?id=" . htmlspecialchars($tulipe['id']) . "'>Modifier</a> | 
-                          <a href='/tulipe/crud/tulipe/delete.php?id=" . htmlspecialchars($tulipe['id']) . "' onClick='return confirm(\"Êtes-vous sûr de vouloir supprimer ?\")'>Supprimer</a></td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='11'>Aucune tulipe trouvée.</td></tr>";
-        }
-        echo "</table>";
-        ?>
+         
+         if ($tulipes) {
+             foreach ($tulipes as $tulipe) {
+                 // Utiliser un fallback si la valeur de 'groupe' est null ou absente
+                 $groupe = isset($tulipe['groupe']) ? htmlspecialchars($tulipe['groupe']) : 'Groupe non défini';
+                 
+                 // Ajouter une classe si le groupe de la tulipe correspond au groupe de l'utilisateur connecté
+                 $highlightClass = ($groupe == $userGroupe) ? 'highlight' : '';
+         
+                 echo "<tr class='$highlightClass'>";
+         
+                 echo "<td>" . htmlspecialchars($tulipe['id']) . "</td>";
+                 echo "<td>" . $groupe . "</td>";
+                 echo "<td>" . htmlspecialchars($tulipe['client']) . "</td>";
+                 echo "<td>" . htmlspecialchars($tulipe['adresse']) . "</td>";
+                 echo "<td>" . htmlspecialchars($tulipe['quantite']) . "</td>";
+                 
+                 // Gestion des semaines
+                 if (!empty($tulipe['semaines'])) {
+                     $semaines = json_decode($tulipe['semaines'], true);
+                     echo "<td>" . implode(", ", $semaines) . "</td>";
+                 } else {
+                     echo "<td>Aucune semaine</td>";
+                 }
+                 
+                 echo "<td>" . htmlspecialchars($tulipe['moyen_de_paiement']) . "</td>";
+                 echo "<td>" . ($tulipe['est_paye'] ? 'Oui' : 'Non') . "</td>";
+                 echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
+                 
+                 // Gestion des signatures
+                 if (!empty($tulipe['signature'])) {
+                     echo "<td><img src='/tulipe/uploads/" . htmlspecialchars($tulipe['signature']) . "' alt='Signature' style='width:50px;height:50px;'></td>";
+                 } else {
+                     echo "<td>Pas de signature</td>";
+                 }
+                 
+                 // Liens pour modifier et supprimer
+                 echo "<td><a href='/tulipe/crud/tulipe/edit.php?id=" . htmlspecialchars($tulipe['id']) . "'>Modifier</a> | 
+                           <a href='/tulipe/crud/tulipe/delete.php?id=" . htmlspecialchars($tulipe['id']) . "' onClick='return confirm(\"Êtes-vous sûr de vouloir supprimer ?\")'>Supprimer</a></td>";
+                 echo "</tr>";
+             }
+         } else {
+             echo "<tr><td colspan='11'>Aucune tulipe trouvée.</td></tr>";
+         }
+         ?>
             
         </table>
     </div>
