@@ -18,6 +18,7 @@ if (isset($_POST['submit'])) {
     $idusers = $_SESSION['id']; // ID de l'utilisateur courant
     $signature = $_POST['signature']; // Récupérer la signature en base64 (si fournie)
     $adresse = $_POST['adresse']; // Nouvelle adresse
+    $telephone = $_POST['telephone']; // Nouvelle telephone
     $semaines = isset($_POST['semaine']) ? json_encode($_POST['semaine']) : ''; // Semaine sélectionnée
 
     // Gestion de la signature : vérifier si une signature a été fournie
@@ -37,8 +38,8 @@ if (isset($_POST['submit'])) {
 
     // Insertion dans la base de données
     try {
-        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $file_name, $adresse, $semaines, $client]);
+        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, telephone, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers,$telephone, $file_name, $adresse, $semaines, $client]);
         $messageValide = "La commande a bien été ajoutée avec succès.";
     } catch (PDOException $e) {
         $messageErreur = "ERREUR: " . $e->getMessage();
@@ -104,6 +105,10 @@ if (isset($_POST['submit'])) {
                         <input type="checkbox" name="semaine[]" value="2"> Semaine 2<br>
                         <input type="checkbox" name="semaine[]" value="3"> Semaine 3
                     </td>
+                </tr>
+                <tr>
+                    <td>Telephone</td>
+                    <td><input type="text" name="telephone" required></td>
                 </tr>
                 <!-- Champ pour la signature (facultatif) -->
                 <tr>

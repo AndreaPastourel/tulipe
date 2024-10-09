@@ -26,6 +26,7 @@ if (isset($_GET['id'])) {
         $client = $_POST['client'];    // Nom du client
         $semaines = isset($_POST['semaines']) ? $_POST['semaines'] : []; // Sélection des semaines
         $moyen_de_paiement = $_POST['moyen_de_paiement'];
+        $telephone = $_POST['telephone'];
         $est_paye = isset($_POST['est_paye']) ? 1 : 0;
         $uploads_dir = $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/';  // Dossier de stockage des signatures
 
@@ -61,8 +62,8 @@ if (isset($_GET['id'])) {
         $prix = $quantite * 10;  // Exemple : chaque tulipe coûte 10€
 
         // Mise à jour de la tulipe avec les nouveaux champs
-        $stmt = $pdo->prepare("UPDATE tulipes SET quantite = ?, prix = ?, adresse = ?, client = ?, semaines = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
-        $stmt->execute([$quantite, $prix, $adresse, $client, $semaines_json, $moyen_de_paiement, $est_paye, $signature_filename, $id]);
+        $stmt = $pdo->prepare("UPDATE tulipes SET  telephone=?,quantite = ?, prix = ?, adresse = ?, client = ?, semaines = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
+        $stmt->execute([$telephone,$quantite, $prix, $adresse, $client, $semaines_json, $moyen_de_paiement, $est_paye, $signature_filename, $id]);
 
         header("Location:/tulipe/crud/tulipe/crudTulipe.php");
         exit();
@@ -125,6 +126,10 @@ if (isset($_GET['id'])) {
             <tr>
                 <td><label>Est payé:</label></td>
                 <td><input type="checkbox" name="est_paye" <?php if ($res['est_paye']) echo 'checked'; ?>></td>
+            </tr>
+            <tr>
+                <td><label>Telephone:</label></td>
+                <td><input type="telephone" name="quantite" value="<?php echo htmlspecialchars($res['telephone']); ?>" required></td>
             </tr>
             <tr>
                 <td><label>Signature actuelle:</label></td>
