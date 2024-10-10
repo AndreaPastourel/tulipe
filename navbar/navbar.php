@@ -1,6 +1,10 @@
 <link href="tulipe/css/style.css" rel="stylesheet" />
 <link href="tulipe/css/bootstrap.css" rel="stylesheet" />
 
+<div class="logo_container">
+            <img src="/tulipe/img/lionsClub.png" alt="Logo 1" class="logo">
+            <img src="/tulipe/img/baudimont.png" alt="Logo 2" class="logo">
+        </div>
 <!-- header section starts -->
 <header class="header_section">
     <div class="container-fluid">
@@ -8,7 +12,7 @@
             <div class="" id="">
 
                 <div class="custom_menu-btn">
-                    <button onclick="openNav()">
+                    <button onclick="openNav() ">
                         <span class="s-1"> </span>
                         <span class="s-2"> </span>
                         <span class="s-3"> </span>

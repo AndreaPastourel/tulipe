@@ -4,12 +4,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/tulipe/conn/dbConnect.php'); // Conne
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['login'];
-    $email = $_POST['email'];
+   
     $password = $_POST['password'];
 
     // Préparer la requête pour vérifier l'utilisateur
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE login = ? AND email = ?");
-    $stmt->execute([$login, $email]);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE login = ? ");
+    $stmt->execute([$login]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Vérifier si l'utilisateur existe et valider le mot de passe
@@ -45,10 +45,7 @@ require_once (($_SERVER['DOCUMENT_ROOT'] . '/tulipe/navbar/navbar.php')); ?>
                 <label class="input-label" for="login">Login</label>
             </div>
 
-            <div class="input">
-                <input type="email" class="input-field" name="email" id="email" required/>
-                <label class="input-label" for="email">Email</label>
-            </div>
+           
 
             <div class="input">
                 <input type="password" class="input-field" name="password" id="password" required/>

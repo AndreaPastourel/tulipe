@@ -61,6 +61,7 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Est payé</th>
                 <th>Telephone</th>
                 <th>Signature</th>
+                <th>Remarque</th>
                 <th>Action</th>
             </tr>
             <?php
@@ -73,7 +74,7 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                  // Ajouter une classe si le groupe de la tulipe correspond au groupe de l'utilisateur connecté
                  $highlightClass = ($groupe == $userGroupe) ? 'highlight' : '';
          
-                 echo "<tr class='$highlightClass'>";
+                 echo "<tr>";
                  echo "<td>" . htmlspecialchars($tulipe['id']) . "</td>";
                  echo "<td>" . $groupe . "</td>";
                  echo "<td>" . htmlspecialchars($tulipe['client']) . "</td>";
@@ -87,17 +88,17 @@ $tulipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                  } else {
                      echo "<td>Aucune semaine</td>";
                  }
-                 
+                 echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
                  echo "<td>" . htmlspecialchars($tulipe['moyen_de_paiement']) . "</td>";
                  echo "<td>" . ($tulipe['est_paye'] ? 'Oui' : 'Non') . "</td>";
-                 echo "<td>" . htmlspecialchars($tulipe['prix']) . "</td>";
-                 echo "<td>" . htmlspecialchars($tulipe['telephone']) . "</td>";
+                 echo "<td>" . $tulipe['telephone'] . "</td>";
                  // Gestion des signatures
                  if (!empty($tulipe['signature'])) {
                      echo "<td><img src='/tulipe/uploads/" . htmlspecialchars($tulipe['signature']) . "' alt='Signature' style='width:50px;height:50px;'></td>";
                  } else {
                      echo "<td>Pas de signature</td>";
                  }
+                 echo "<td>" . htmlspecialchars($tulipe['remarque']) . "</td>";
                  
                  // Liens pour modifier et supprimer
                  echo "<td><a href='/tulipe/crud/tulipe/edit.php?id=" . htmlspecialchars($tulipe['id']) . "'>Modifier</a> | 

@@ -26,8 +26,9 @@ if (isset($_GET['id'])) {
         $client = $_POST['client'];    // Nom du client
         $semaines = isset($_POST['semaines']) ? $_POST['semaines'] : []; // Sélection des semaines
         $moyen_de_paiement = $_POST['moyen_de_paiement'];
-        $telephone = $_POST['telephone'];
+        $telephone = isset($_POST['telephone']) ? $_POST['telephone'] : null;
         $est_paye = isset($_POST['est_paye']) ? 1 : 0;
+        $remarque = $_POST['remarque'];
         $uploads_dir = $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/';  // Dossier de stockage des signatures
 
         // Gestion de la signature dessinée
@@ -37,7 +38,6 @@ if (isset($_GET['id'])) {
         if (!empty($signature)) {
             // Supprimer l'ancienne signature s'il y en a une
             if (!empty($res['signature']) && file_exists($uploads_dir . $res['signature'])) {
-                unlink($uploads_dir . $res['signature']);  // Supprimer l'ancienne signature
             }
 
             // Générer un nom de fichier unique pour la nouvelle signature
@@ -62,8 +62,8 @@ if (isset($_GET['id'])) {
         $prix = $quantite * 10;  // Exemple : chaque tulipe coûte 10€
 
         // Mise à jour de la tulipe avec les nouveaux champs
-        $stmt = $pdo->prepare("UPDATE tulipes SET  telephone=?,quantite = ?, prix = ?, adresse = ?, client = ?, semaines = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
-        $stmt->execute([$telephone,$quantite, $prix, $adresse, $client, $semaines_json, $moyen_de_paiement, $est_paye, $signature_filename, $id]);
+        $stmt = $pdo->prepare("UPDATE tulipes SET remarque=?, telephone=?,quantite = ?, adresse = ?, client = ?, semaines = ?, moyen_de_paiement = ?, est_paye = ?, signature = ? WHERE id = ?");
+        $stmt->execute([$remarque,$telephone,$quantite, $adresse, $client, $semaines_json, $moyen_de_paiement, $est_paye, $signature_filename, $id]);
 
         header("Location:/tulipe/crud/tulipe/crudTulipe.php");
         exit();
@@ -119,8 +119,9 @@ if (isset($_GET['id'])) {
             <td>
                 <select name="moyen_de_paiement" id="moyen_de_paiement">
                     <option value="<?php echo $res['moyen_de_paiement']; ?>"><?php echo $res['moyen_de_paiement']; ?></option>
-                    <option value="cheque">cheque</option>
-                    <option value="espece">espece</option>
+                    <option value="cheque">Cheque</option>
+                    <option value="espece">Espece</option>
+                    <option value="carte">Carte</option>
                 </select>
             </td>
             <tr>
@@ -129,7 +130,7 @@ if (isset($_GET['id'])) {
             </tr>
             <tr>
                 <td><label>Telephone:</label></td>
-                <td><input type="telephone" name="quantite" value="<?php echo htmlspecialchars($res['telephone']); ?>" required></td>
+                <td><input type="text" name="telephone" value="<?php echo htmlspecialchars($res['telephone']); ?>" required></td>
             </tr>
             <tr>
                 <td><label>Signature actuelle:</label></td>
@@ -146,6 +147,10 @@ if (isset($_GET['id'])) {
                     <button type="button" id="clear-btn">Effacer</button>
                     <input type="hidden" name="signature" id="signature">
                 </td>
+            </tr>
+            <tr>
+                <td>Remarque</td>
+                <td><textarea name="remarque" rows="4" cols="50"><?php echo htmlspecialchars($res['remarque']); ?></textarea></td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center;">

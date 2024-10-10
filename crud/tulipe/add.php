@@ -12,39 +12,36 @@ if (!isset($_SESSION['username'])) {
 
 if (isset($_POST['submit'])) {
     $quantite = $_POST['quantite'];
-    $client = $_POST['client']; // Nouveau champ client
+    $client = $_POST['client'];
     $moyen_de_paiement = $_POST['moyen_de_paiement'];
     $est_paye = isset($_POST['est_paye']) ? 1 : 0;
-    $idusers = $_SESSION['id']; // ID de l'utilisateur courant
-    $signature = $_POST['signature']; // Récupérer la signature en base64 (si fournie)
-    $adresse = $_POST['adresse']; // Nouvelle adresse
-    $telephone = $_POST['telephone']; // Nouvelle telephone
-    $semaines = isset($_POST['semaine']) ? json_encode($_POST['semaine']) : ''; // Semaine sélectionnée
+    $idusers = $_SESSION['id'];
+    $signature = $_POST['signature'];
+    $adresse = $_POST['adresse'];
+    $telephone = $_POST['telephone'];
+    $semaines = isset($_POST['semaine']) ? json_encode($_POST['semaine']) : '';
+    $remarque = $_POST['remarque']; // Capture de la remarque
 
-    // Gestion de la signature : vérifier si une signature a été fournie
     if (!empty($signature)) {
-        // Convertir la signature base64 en un fichier image
         $signature = str_replace('data:image/png;base64,', '', $signature);
         $signature = str_replace(' ', '+', $signature);
         $data = base64_decode($signature);
-        $file_name = 'signature_' . time() . '.png'; // Nom du fichier unique
+        $file_name = 'signature_' . time() . '.png';
         $file_path = $_SERVER['DOCUMENT_ROOT'] . '/tulipe/uploads/' . $file_name;
-
-        // Sauvegarder l'image dans le dossier uploads
         file_put_contents($file_path, $data);
     } else {
-        $file_name = null; // Si pas de signature
+        $file_name = null;
     }
 
-    // Insertion dans la base de données
     try {
-        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, telephone, signature, adresse, semaines, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $telephone, $file_name, $adresse, $semaines, $client]);
+        $stmt = $pdo->prepare("INSERT INTO tulipes (quantite, moyen_de_paiement, est_paye, idusers, telephone, signature, adresse, semaines, client, remarque) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$quantite, $moyen_de_paiement, $est_paye, $idusers, $telephone, $file_name, $adresse, $semaines, $client, $remarque]);
         $messageValide = "La commande a bien été ajoutée avec succès.";
     } catch (PDOException $e) {
         $messageErreur = "ERREUR: " . $e->getMessage();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +82,7 @@ if (isset($_POST['submit'])) {
                             <option value="">--Choisir une option--</option>
                             <option value="espece">Espèce</option>
                             <option value="cheque">Chèque</option>
+                            <option value="carte">Carte</option>
                         </select>
                     </td>
                 </tr>
@@ -119,6 +117,11 @@ if (isset($_POST['submit'])) {
                         <input type="hidden" id="signature" name="signature">
                     </td>
                 </tr>
+                <tr>
+                    <td>Remarque</td>
+                    <td><textarea name="remarque" rows="4" cols="50"></textarea></td>
+                </tr>
+
                 <tr>
                     <td><input type="submit" name="submit" value="Ajouter"></td>
                 </tr>
